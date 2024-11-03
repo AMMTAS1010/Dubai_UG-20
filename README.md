@@ -278,31 +278,31 @@ Exploratory Data Analysis was conducted to uncover patterns, detect anomalies, a
 
 1. **Correlation Matrix Heatmap**
    - **Description:** Visualizes the correlation coefficients between numerical features.
-   - **Image:** ![Correlation Matrix Heatmap](Dubai_UG-20/CW_progress/EDA_Results/correlation_matrix.png)
+   - **Image:** ![Correlation Matrix Heatmap](CW_progress/EDA_Results/correlation_matrix.png)
 
 2. **Distribution of Delivery Time**
    - **Description:** Shows the distribution of delivery times across all orders.
-   - **Image:** ![Distribution of Delivery Time](Dubai_UG-20/CW_progress/EDA_Results/time_taken_distribution.png)
+   - **Image:** ![Distribution of Delivery Time](CW_progress/EDA_Results/time_taken_distribution.png)
 
 3. **Time Taken vs. Customer Satisfaction**
    - **Description:** Compares delivery times for satisfied and unsatisfied customers.
-   - **Image:** ![Time Taken vs. Customer Satisfaction](Dubai_UG-20/CW_progress/EDA_Results/time_taken_vs_satisfaction.png)
+   - **Image:** ![Time Taken vs. Customer Satisfaction](CW_progress/EDA_Results/time_taken_vs_satisfaction.png)
 
 4. **Delivery Person Ratings vs. Time Taken**
    - **Description:** Explores the relationship between delivery person ratings and delivery time.
-   - **Image:** ![Delivery Person Ratings vs. Time Taken](Dubai_UG-20/CW_progress/EDA_Results/ratings_vs_time_taken.png)
+   - **Image:** ![Delivery Person Ratings vs. Time Taken](CW_progress/EDA_Results/ratings_vs_time_taken.png)
 
 5. **Time Taken by Weather Conditions**
    - **Description:** Analyzes how different weather conditions affect delivery times.
-   - **Image:** ![Time Taken by Weather Conditions](Dubai_UG-20/CW_progress/EDA_Results/time_taken_by_weather.png)
+   - **Image:** ![Time Taken by Weather Conditions](CW_progress/EDA_Results/time_taken_by_weather.png)
 
 6. **Time Taken by Road Traffic Density**
    - **Description:** Examines the impact of road traffic density on delivery times.
-   - **Image:** ![Time Taken by Road Traffic Density](Dubai_UG-20/CW_progress/EDA_Results/time_taken_by_traffic.png)
+   - **Image:** ![Time Taken by Road Traffic Density](CW_progress/EDA_Results/time_taken_by_traffic.png)
 
 7. **Customer Satisfaction Counts**
    - **Description:** Visualizes the count of satisfied vs. unsatisfied customers.
-   - **Image:** ![Customer Satisfaction Counts](Dubai_UG-20/CW_progress/EDA_Results/customer_satisfaction_counts.png)
+   - **Image:** ![Customer Satisfaction Counts](CW_progress/EDA_Results/customer_satisfaction_counts.png)
 
 ---
 
