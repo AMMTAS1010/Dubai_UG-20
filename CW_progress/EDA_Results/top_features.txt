@@ -1,0 +1,9 @@
+Time_taken (min)
+Delivery_person_Ratings
+multiple_deliveries
+Delivery_person_Age
+Vehicle_condition
+Delivery_location_latitude
+Restaurant_latitude
+Delivery_location_longitude
+Restaurant_longitude
