@@ -375,12 +375,9 @@ Alternatively, install packages individually:
 
 4. **Download the Datasets:**
 
-   Due to file size limitations, the datasets are not included in this repository. Please download them from the provided Kaggle links:
+   Although the datasets are provided in this repository, links to the kaggle web pages for those datasets have been provided at the beginning of this readme file.
 
-   - **Zomato Delivery Operations Analytics Dataset:** [Download Link](https://www.kaggle.com/datasets/saurabhbadole/zomato-delivery-operations-analytics-dataset)
-   - **Zomato Restaurants Dataset:** [Download Link](https://www.kaggle.com/datasets/abhijitdahatonde/zomato-restaurants-dataset)
-
-   Place the downloaded CSV files in the project directory.
+  The Dataset CSV files can be found in the Dataset folder of the project directory, inside CW_progress.
 
 5. **Run Data Preprocessing:**
 
