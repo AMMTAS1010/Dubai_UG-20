@@ -454,4 +454,73 @@ To replicate the analysis:
 
    ```bash
    pip install pandas numpy matplotlib seaborn
-   
+   ```
+4. **Download the Datasets:**
+
+   Due to file size limitations, the datasets are not included in this repository. Please download them from the provided Kaggle links:
+
+   - **Zomato Delivery Operations Analytics Dataset:** [Download Link](https://www.kaggle.com/datasets/saurabhbadole/zomato-delivery-operations-analytics-dataset)
+   - **Zomato Restaurants Dataset:** [Download Link](https://www.kaggle.com/datasets/abhijitdahatonde/zomato-restaurants-dataset)
+
+   Place the downloaded CSV files in the project directory.
+
+5. **Run Data Preprocessing:**
+
+   ```bash
+   python data_preprocessing.py
+
+6. **Run Exploratory Data Analysis:**
+
+   ```bash
+   python data_analysis_exploration.py
+
+### 7. View Outputs:
+
+- Preprocessed data is saved in the `preprocessed_data/` directory.
+- Visualizations are saved in the `images/` directory.
+- Terminal outputs provide detailed logs of the preprocessing and EDA steps.
+
+---
+
+## Additional Notes
+
+- **Data Privacy:**
+  - Ensure compliance with data usage policies and privacy regulations when handling datasets.
+- **Data Sources License:**
+  - Verify and adhere to the licenses associated with the datasets used.
+- **Image Placeholders:**
+  - Replace image placeholders with actual images generated from your analysis.
+- **Customizations:**
+  - Feel free to customize scripts and visualizations to suit specific analysis needs.
+- **Future Work:**
+  - Explore integrating the restaurant dataset more effectively.
+  - Implement advanced modeling techniques in subsequent phases of the project.
+
+---
+
+## Contact Information
+
+For questions or collaboration, please contact:
+
+- **Abdallah Alshaqra** - [Email](mailto:abdallah.alshaqra@example.com)
+- **Kanishka Agarwal** - [Email](mailto:kanishka.agarwal@example.com)
+- **Suhaas** - [Email](mailto:suhaas@example.com)
+- **Syeda Zainab** - [Email](mailto:syeda.zainab@example.com)
+
+---
+
+## Acknowledgments
+
+We thank the contributors of the datasets and the open-source community for the tools and resources used in this project.
+
+---
+
+## Conclusion
+
+This detailed README provides an in-depth overview of the data preprocessing and exploratory data analysis steps undertaken in our project. By documenting the techniques used and the findings obtained, we have set a solid foundation for the subsequent modeling and analysis phases of our coursework project.
+
+If you have any questions or need further assistance, please feel free to reach out to any of the team members listed above.
+
+---
+
+# End of README
