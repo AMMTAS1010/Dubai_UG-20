@@ -81,7 +81,6 @@ Data preprocessing involved cleaning and preparing the datasets to ensure they a
 
 - **Steps:**
 
-  - Imported necessary libraries: `pandas`, `numpy`, `os`.
   - Loaded the datasets using `pd.read_csv()`:
 
     ```python
@@ -102,43 +101,17 @@ Data preprocessing involved cleaning and preparing the datasets to ensure they a
     - Replaced strings like `'NaN '`, `'NaN'`, `'nan'`, `'NA'`, `'N/A'` with actual `NaN` values using `replace()`.
     - Dropped rows with missing critical values using `dropna(subset=[])`.
 
-      ```python
-      delivery_df.replace(['NaN ', 'NaN', 'nan', 'NA', 'N/A'], np.nan, inplace=True)
-      delivery_df.dropna(subset=['Time_taken (min)', 'Delivery_person_Age', 'Delivery_person_Ratings'], inplace=True)
-      ```
-
   - **Data Type Conversion:**
     - Converted columns to appropriate data types using `pd.to_numeric()` and `pd.to_datetime()` with `errors='coerce'`.
-
-      ```python
-      delivery_df['Delivery_person_Age'] = pd.to_numeric(delivery_df['Delivery_person_Age'], errors='coerce')
-      delivery_df['Order_Date'] = pd.to_datetime(delivery_df['Order_Date'], errors='coerce', dayfirst=True)
-      ```
 
   - **Removing Unnecessary Columns:**
     - Dropped irrelevant columns like `'Unnamed: 0'`, `'Unnamed: 0.1'` from `restaurant_df`.
 
-      ```python
-      restaurant_df.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1, inplace=True, errors='ignore')
-      ```
-
   - **Standardizing Column Names:**
     - Renamed columns for consistency using `rename()`.
 
-      ```python
-      restaurant_df.rename(columns={
-          'restaurant name': 'restaurant_name',
-          'rate (out of 5)': 'rate_out_of_5',
-          # ... other renames ...
-      }, inplace=True)
-      ```
-
   - **Handling Duplicates:**
     - Checked for and removed duplicate rows using `drop_duplicates()`.
-
-      ```python
-      restaurant_df.drop_duplicates(inplace=True)
-      ```
 
 ### 1.3. Feature Engineering
 
@@ -149,58 +122,20 @@ Data preprocessing involved cleaning and preparing the datasets to ensure they a
   - **Extracting Numerical Values from Strings:**
     - Used regular expressions with `str.extract()` to extract numerical values from strings in the `'Time_taken (min)'` column.
 
-      ```python
-      delivery_df['Time_taken (min)'] = delivery_df['Time_taken (min)'].str.extract(r'(\d+)').astype(float)
-      ```
-
   - **Encoding Categorical Variables:**
     - Applied one-hot encoding to categorical features using `pd.get_dummies()`.
-
-      ```python
-      categorical_cols = ['Weather_conditions', 'Road_traffic_density', 'Type_of_order', 'Type_of_vehicle', 'Festival', 'City']
-      delivery_df = pd.get_dummies(delivery_df, columns=categorical_cols, drop_first=True)
-      ```
 
   - **Creating Target Variable - Customer Satisfaction:**
     - Defined `customer_satisfaction` based on whether the delivery time was less than or equal to the mean delivery time.
 
-      ```python
-      mean_time = delivery_df['Time_taken (min)'].mean()
-      delivery_df['customer_satisfaction'] = np.where(delivery_df['Time_taken (min)'] <= mean_time, 1, 0)
-      ```
-
   - **Calculating Delivery Distance:**
     - Calculated the haversine distance between restaurant and delivery locations using latitude and longitude.
-
-      ```python
-      from math import radians, sin, cos, sqrt, atan2
-
-      def haversine_distance(lat1, lon1, lat2, lon2):
-          # Convert latitude and longitude from degrees to radians
-          lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-
-          # Haversine formula
-          dlon = lon2 - lon1
-          dlat = lat2 - lat1
-          a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-          c = 2 * atan2(sqrt(a), sqrt(1 - a))
-          r = 6371  # Radius of Earth in kilometers
-          return c * r
-
-      delivery_df['delivery_distance'] = delivery_df.apply(lambda row: haversine_distance(
-          row['Restaurant_latitude'], row['Restaurant_longitude'],
-          row['Delivery_location_latitude'], row['Delivery_location_longitude']), axis=1)
-      ```
 
 ### 1.4. Data Integration
 
 - **Objective:** Merge the delivery and restaurant datasets to create a unified dataset for analysis.
 
 - **Steps:**
-
-  - **Identifying Common Keys:**
-    - Determined that there was no direct common key between the datasets.
-    - Decided to proceed with the delivery dataset for modeling, as it contains the necessary features to predict customer satisfaction.
 
   - **Potential Integration (Future Work):**
     - Suggested enriching the delivery dataset with restaurant information based on location proximity or matching restaurant names after data cleaning.
@@ -211,18 +146,11 @@ Data preprocessing involved cleaning and preparing the datasets to ensure they a
 
 - **Steps:**
 
-  - Created a directory `preprocessed_data` to store the output.
   - Saved the preprocessed DataFrame to a CSV file using `to_csv()`.
 
     ```python
     delivery_df.to_csv('preprocessed_data/preprocessed_data.csv', index=False)
     ```
-
-**Data Preprocessing Workflow Diagram:**
-
-*(Image Placeholder)*
-
-![Data Preprocessing Workflow](images/data_preprocessing_workflow.png)
 
 ---
 
@@ -245,40 +173,21 @@ Exploratory Data Analysis was conducted to uncover patterns, detect anomalies, a
   3  0xc8b6     LUDHRES15DEL02                 34.0                      4.3  ...            False         False       False                      1
   4  0xdb64      KNPRES14DEL02                 24.0                      4.7  ...            False         False       False                      0
 
-  [5 rows x 36 columns]
-
   Descriptive Statistics:
-         Delivery_person_Age  Delivery_person_Ratings  Restaurant_latitude  ...  multiple_deliveries  Time_taken (min)  customer_satisfaction
-  count         43676.000000             43676.000000         43676.000000  ...         43676.000000      43676.000000           43676.000000
-  mean             29.567634                 4.633774            17.214813  ...             0.727562         26.288351               0.545517
-  std               5.814344                 0.334744             7.751410  ...             0.576774          9.369864               0.497930
-  min              15.000000                 1.000000           -30.902872  ...             0.000000         10.000000               0.000000
-  25%              25.000000                 4.500000            12.933298  ...             0.000000         19.000000               0.000000
-  50%              30.000000                 4.700000            18.551440  ...             1.000000         26.000000               1.000000
-  75%              35.000000                 4.900000            22.732225  ...             1.000000         32.000000               1.000000
-  max              50.000000                 6.000000            30.914057  ...             3.000000         54.000000               1.000000
-
-  [8 rows x 10 columns]
-### Observations:
-
-- **Delivery_person_Age:**
-  - **Mean:** Approximately 29.57 years.
-  - **Standard Deviation:** Around 5.81 years.
-  - **Range:** 15 to 50 years.
-- **Delivery_person_Ratings:**
-  - **Mean:** Approximately 4.63.
-  - **Standard Deviation:** 0.33.
-  - **Range:** 1 to 6 (ratings above 5 may need further investigation).
-- **Time_taken (min):**
-  - **Mean:** Approximately 26.29 minutes.
-  - **Standard Deviation:** 9.37 minutes.
-  - **Range:** 10 to 54 minutes.
-
----
+         Delivery_person_Age  Delivery_person_Ratings  Time_taken (min) 
+  count         43676.000000             43676.000000           43676.000000
+  mean             29.567634                 4.633774              26.288351
+  std               5.814344                 0.334744               9.369864
+  min              15.000000                 1.000000              10.000000
+  25%              25.000000                 4.500000              19.000000
+  50%              30.000000                 4.700000              26.000000
+  75%              35.000000                 4.900000              32.000000
+  max              50.000000                 6.000000              54.000000
 
 ### 2.2. Missing Values Analysis
 
 - **Objective:** Identify and address missing data in the dataset.
+
 - **Terminal Output:**
 
   ```plaintext
@@ -319,10 +228,11 @@ Exploratory Data Analysis was conducted to uncover patterns, detect anomalies, a
   City_Unknown                           0
   City_Urban                             0
   customer_satisfaction                  0
-  dtype: int64
+
 ### 2.3. Correlation Analysis
 
 - **Objective:** Identify relationships between variables using the correlation matrix.
+
 - **Terminal Output:**
 
   ```plaintext
@@ -342,52 +252,57 @@ Exploratory Data Analysis was conducted to uncover patterns, detect anomalies, a
   Restaurant_latitude            0.012529
   Delivery_location_longitude    0.008790
   Restaurant_longitude           0.008310
-  Name: customer_satisfaction, dtype: float64
 
-  Top features saved to 'top_features.txt'.
+- **Top Correlated Features Saved to File:** `top_features.txt`
+
+  - **File Contents:**
+    ```plaintext
+    Time_taken (min)
+    Delivery_person_Ratings
+    multiple_deliveries
+    Delivery_person_Age
+    Vehicle_condition
+    Delivery_location_latitude
+    Restaurant_latitude
+    Delivery_location_longitude
+    Restaurant_longitude
+    ```
+
+  - **Correlation Matrix Heatmap:**
+
+    ![Correlation Matrix Heatmap](images/correlation_matrix.png)
+
+---
+
 ### 2.4. Data Visualization
 
 1. **Correlation Matrix Heatmap**
    - **Description:** Visualizes the correlation coefficients between numerical features.
-   - **Image Placeholder:**
-
-     ![Correlation Matrix Heatmap](images/correlation_matrix.png)
+   - **Image:** ![Correlation Matrix Heatmap](EDA_Results/correlation_matrix.png)
 
 2. **Distribution of Delivery Time**
    - **Description:** Shows the distribution of delivery times across all orders.
-   - **Image Placeholder:**
-
-     ![Distribution of Delivery Time](images/delivery_time_distribution.png)
+   - **Image:** ![Distribution of Delivery Time](EDA_Results/time_taken_distribution.png)
 
 3. **Time Taken vs. Customer Satisfaction**
    - **Description:** Compares delivery times for satisfied and unsatisfied customers.
-   - **Image Placeholder:**
-
-     ![Time Taken vs. Customer Satisfaction](images/time_vs_satisfaction.png)
+   - **Image:** ![Time Taken vs. Customer Satisfaction](EDA_Results/time_taken_vs_satisfaction.png)
 
 4. **Delivery Person Ratings vs. Time Taken**
    - **Description:** Explores the relationship between delivery person ratings and delivery time.
-   - **Image Placeholder:**
-
-     ![Delivery Person Ratings vs. Time Taken](images/ratings_vs_time_taken.png)
+   - **Image:** ![Delivery Person Ratings vs. Time Taken](EDA_Results/ratings_vs_time_taken.png)
 
 5. **Time Taken by Weather Conditions**
    - **Description:** Analyzes how different weather conditions affect delivery times.
-   - **Image Placeholder:**
-
-     ![Time Taken by Weather Conditions](images/time_taken_by_weather.png)
+   - **Image:** ![Time Taken by Weather Conditions](EDA_Results/time_taken_by_weather.png)
 
 6. **Time Taken by Road Traffic Density**
    - **Description:** Examines the impact of road traffic density on delivery times.
-   - **Image Placeholder:**
-
-     ![Time Taken by Road Traffic Density](images/time_taken_by_traffic.png)
+   - **Image:** ![Time Taken by Road Traffic Density](EDA_Results/time_taken_by_traffic.png)
 
 7. **Customer Satisfaction Counts**
    - **Description:** Visualizes the count of satisfied vs. unsatisfied customers.
-   - **Image Placeholder:**
-
-     ![Customer Satisfaction Counts](images/customer_satisfaction_counts.png)
+   - **Image:** ![Customer Satisfaction Counts](EDA_Results/customer_satisfaction_counts.png)
 
 ---
 
@@ -438,23 +353,26 @@ To replicate the analysis:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/DMML-Coursework-Food-Delivery-Satisfaction.git
+   git clone https://github.com/AMMTAS/Dubai_UG-20.git
+
 2. **Navigate to the Project Directory:**
 
    ```bash
    cd DMML-Coursework-Food-Delivery-Satisfaction
+
 3. **Install Required Dependencies:**
 
    Ensure you have Python 3.x installed along with the necessary packages:
 
    ```bash
    pip install -r requirements.txt
-   
-  Alternatively, install packages individually:
+
+Alternatively, install packages individually:
 
    ```bash
    pip install pandas numpy matplotlib seaborn
-   ```
+  ```
+
 4. **Download the Datasets:**
 
    Due to file size limitations, the datasets are not included in this repository. Please download them from the provided Kaggle links:
@@ -474,11 +392,11 @@ To replicate the analysis:
    ```bash
    python data_analysis_exploration.py
 
-### 7. View Outputs:
+7. **View Outputs:**
 
-- Preprocessed data is saved in the `preprocessed_data/` directory.
-- Visualizations are saved in the `images/` directory.
-- Terminal outputs provide detailed logs of the preprocessing and EDA steps.
+   - Preprocessed data is saved in the `preprocessed_data/` directory.
+   - Visualizations are saved in the `images/` directory.
+   - Terminal outputs provide detailed logs of the preprocessing and EDA steps.
 
 ---
 
@@ -502,7 +420,7 @@ To replicate the analysis:
 
 For questions or collaboration, please contact:
 
-- **Abdallah Alshaqra** - [Email](mailto:abdallah.alshaqra@example.com)
+- **Abdallah Alshaqra** - [Email](mailto:ama2018@hw.ac.uk)
 - **Kanishka Agarwal** - [Email](mailto:kanishka.agarwal@example.com)
 - **Suhaas** - [Email](mailto:suhaas@example.com)
 - **Syeda Zainab** - [Email](mailto:syeda.zainab@example.com)
