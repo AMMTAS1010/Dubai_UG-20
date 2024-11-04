@@ -84,31 +84,31 @@ The EDA folder contains:
 - **Visualizations**:
     1. **Correlation Matrix Heatmap**  
         - Visualizes correlations between all numerical features.
-        - ![Correlation Matrix Heatmap](../EDA_Results/correlation_matrix.png)
+        - ![Correlation Matrix Heatmap](CW_progress/EDA_Results/correlation_matrix.png)
 
     2. **Distribution of Delivery Time**  
         - Shows the distribution of delivery times.
-        - ![Distribution of Delivery Time](../EDA_Results/time_taken_distribution.png)
+        - ![Distribution of Delivery Time](CW_progress/EDA_Results/time_taken_distribution.png)
 
     3. **Time Taken vs. Customer Satisfaction**  
         - Compares delivery times for satisfied and unsatisfied customers.
-        - ![Time Taken vs. Customer Satisfaction](../EDA_Results/time_taken_vs_satisfaction.png)
+        - ![Time Taken vs. Customer Satisfaction](CW_progress/EDA_Results/time_taken_vs_satisfaction.png)
 
     4. **Delivery Person Ratings vs. Time Taken**  
         - Relationship between delivery person ratings and delivery time.
-        - ![Delivery Person Ratings vs. Time Taken](../EDA_Results/ratings_vs_time_taken.png)
+        - ![Delivery Person Ratings vs. Time Taken](CW_progress/EDA_Results/ratings_vs_time_taken.png)
 
     5. **Time Taken by Weather Conditions**  
         - Analyzes how weather affects delivery times.
-        - ![Time Taken by Weather Conditions](../EDA_Results/time_taken_by_weather.png)
+        - ![Time Taken by Weather Conditions](CW_progress/EDA_Results/time_taken_by_weather.png)
 
     6. **Time Taken by Road Traffic Density**  
         - Examines road traffic's impact on delivery time.
-        - ![Time Taken by Road Traffic Density](../EDA_Results/time_taken_by_traffic.png)
+        - ![Time Taken by Road Traffic Density](CW_progress/EDA_Results/time_taken_by_traffic.png)
 
     7. **Customer Satisfaction Counts**  
         - Displays count of satisfied vs. unsatisfied customers.
-        - ![Customer Satisfaction Counts](../EDA_Results/customer_satisfaction_counts.png)
+        - ![Customer Satisfaction Counts](CW_progress/EDA_Results/customer_satisfaction_counts.png)
 
 ---
 
