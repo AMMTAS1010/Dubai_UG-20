@@ -1,0 +1,12 @@
+Unnamed: 0.1              0
+Unnamed: 0                0
+restaurant name           0
+restaurant type           0
+rate (out of 5)          68
+num of ratings            0
+avg cost (two people)    57
+online_order              0
+table booking             0
+cuisines type             0
+area                      0
+local address             0

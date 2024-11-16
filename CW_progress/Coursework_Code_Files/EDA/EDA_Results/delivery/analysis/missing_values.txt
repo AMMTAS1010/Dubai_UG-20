@@ -1,0 +1,20 @@
+ID                                0
+Delivery_person_ID                0
+Delivery_person_Age            1854
+Delivery_person_Ratings        1908
+Restaurant_latitude               0
+Restaurant_longitude              0
+Delivery_location_latitude        0
+Delivery_location_longitude       0
+Order_Date                        0
+Time_Orderd                    1731
+Time_Order_picked                 0
+Weather_conditions              616
+Road_traffic_density            601
+Vehicle_condition                 0
+Type_of_order                     0
+Type_of_vehicle                   0
+multiple_deliveries             993
+Festival                        228
+City                           1200
+Time_taken (min)                  0
