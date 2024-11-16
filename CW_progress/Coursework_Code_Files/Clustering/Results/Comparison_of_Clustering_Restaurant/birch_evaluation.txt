@@ -1,0 +1,4 @@
+Birch Clustering Evaluation:
+ - Silhouette Score: 0.319
+ - Davies-Bouldin Index: 1.680
+ - Calinski-Harabasz Index: 3368.504
