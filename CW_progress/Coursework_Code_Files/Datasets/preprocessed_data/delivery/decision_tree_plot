@@ -1,0 +1,25 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label=<Delivery_person_Age &le; 17.5<br/>gini = 0.667<br/>samples = 79495<br/>value = [26499.0, 26498.0, 26498.0]<br/>class = Class 0>, fillcolor="#ffffff"] ;
+1 [label=<gini = 0.0<br/>samples = 26498<br/>value = [0, 26498, 0]<br/>class = Class 1>, fillcolor="#39e581"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<Time_taken (min) &le; 30.5<br/>gini = 0.5<br/>samples = 52997<br/>value = [26499.0, 0.0, 26498.0]<br/>class = Class 0>, fillcolor="#ffffff"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label=<gini = 0.0<br/>samples = 19118<br/>value = [19118, 0, 0]<br/>class = Class 0>, fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label=<Vehicle_condition &le; 0.5<br/>gini = 0.341<br/>samples = 33879<br/>value = [7381, 0, 26498]<br/>class = Class 2>, fillcolor="#a470ec"] ;
+2 -> 4 ;
+5 [label=<Weather_conditions_Sunny &le; 0.5<br/>gini = 0.499<br/>samples = 6965<br/>value = [3647.0, 0.0, 3318.0]<br/>class = Class 0>, fillcolor="#fdf4ed"] ;
+4 -> 5 ;
+6 [label="(...)", fillcolor="#C0C0C0"] ;
+5 -> 6 ;
+9 [label="(...)", fillcolor="#C0C0C0"] ;
+5 -> 9 ;
+12 [label=<Weather_conditions_Fog &le; 0.5<br/>gini = 0.239<br/>samples = 26914<br/>value = [3734, 0, 23180]<br/>class = Class 2>, fillcolor="#9559e9"] ;
+4 -> 12 ;
+13 [label="(...)", fillcolor="#C0C0C0"] ;
+12 -> 13 ;
+16 [label="(...)", fillcolor="#C0C0C0"] ;
+12 -> 16 ;
+}

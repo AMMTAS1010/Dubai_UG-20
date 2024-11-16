@@ -1,0 +1,14 @@
+Decision Tree Model Evaluation:
+Accuracy: 0.9578
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.99      0.88      0.93      8832
+           1       1.00      1.00      1.00      8833
+           2       0.89      1.00      0.94      8833
+
+    accuracy                           0.96     26498
+   macro avg       0.96      0.96      0.96     26498
+weighted avg       0.96      0.96      0.96     26498
+
