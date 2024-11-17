@@ -4,7 +4,17 @@ import pandas as pd
 from data_loader import load_preprocessed_data
 from decision_tree_model import train_decision_tree, plot_decision_tree
 from sklearn.preprocessing import OneHotEncoder
-    
+
+from matplotlib import pyplot as plt
+from sklearn.tree import plot_tree
+
+def plot_decision_tree(model, feature_names, class_names, plot_file_path, fontsize=12):
+    plt.figure(figsize=(20, 10))
+    plot_tree(model, feature_names=feature_names, class_names=class_names, filled=True, fontsize=fontsize)
+    plt.savefig(plot_file_path)
+    plt.close()
+    print(f"Decision Tree plot saved to {plot_file_path}")
+
 def encode_categorical_data(X):
     # Identify categorical columns
     categorical_cols = X.select_dtypes(include=['object', 'category']).columns
