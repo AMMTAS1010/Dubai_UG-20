@@ -1,7 +1,7 @@
 # decision_tree_model
 
-from sklearn.tree import DecisionTreeClassifier, export_graphviz
-from graphviz import Source # Source class allows to render the graph in Jupyter notebook
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
 
 # Function to train the decision tree model
 def train_decision_tree(X_train, y_train, max_depth=None):
@@ -32,22 +32,22 @@ def plot_decision_tree(model, feature_names, class_names, save_path=None, max_de
         save_path (str): Path to save the plot (without extension).
         max_depth: Maximum depth to visualize (optional)
     """
-    # Export the decision tree as a dot file
-    dot_data = export_graphviz( # export_graphviz is used to export the decision tree as a dot file
-        model,
-        out_file=None,
-        feature_names=feature_names,
-        class_names=class_names,
-        filled=True, # Fill the boxes with colors
-        rounded=True, # Rounded corners of the boxes
-        special_characters=True,
-        max_depth=max_depth  # Limit the depth if specified
-    )
-    graph = Source(dot_data) # Load the dot data into a graph
-        
+    fig, ax = plt.subplots(figsize=(26, 10))
+    plot_tree(model, 
+              feature_names=feature_names, 
+              class_names=class_names, 
+              max_depth=max_depth, 
+              filled=True, 
+              fontsize=10,
+              ax=ax, 
+              rounded=True)
+    
+    plt.title("Decision Tree Visualization", fontsize=24)
+    plt.subplots_adjust(left=0.025, right=0.995, top=0.94, bottom=0)  # Adjust space around the plot
+    
+    # Save the output plot as PNG file if save_path is provided
     if save_path:
-        # Save as PNG file
-        graph.render(filename=save_path, format='png', cleanup=True) # render the graph as a PNG file
+        plt.savefig(f"{save_path}.png")
         print(f"Decision tree plot saved to {save_path}.png")
     
-    graph.view()
+    plt.show()

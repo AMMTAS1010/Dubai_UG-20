@@ -1,7 +1,6 @@
 # DecisionTree.py
 
 import os
-import pandas as pd
 from data_loader import load_preprocessed_data
 from model_evaluation import evaluate_model
 from decision_tree_model import train_decision_tree, plot_decision_tree
@@ -13,7 +12,18 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 # The function to find the best k for k-Nearest Neighbors
 def find_best_k_for_knn(X_train, y_train, X_valid, y_valid):
-    """Find the best k for k-NN and return the best k and accuracy."""
+    """
+    Find the best k for k-NN and return the best k and accuracy.
+    
+    Args:
+        X_train (pd.DataFrame): Training features.
+        y_train (pd.Series): Training labels.
+        X_valid (pd.DataFrame): Validation features.
+        y_valid (pd.Series): Validation labels.
+    
+    Returns:
+        int: The best k value.
+    """
     best_k = None
     best_accuracy = 0
     results = []
@@ -69,7 +79,7 @@ def plot_confusion_matrix(y_true, y_pred, class_names, output_path):
         output_path (str): Path to save the confusion matrix plot.
     
     Returns:
-        None
+        None: This function does not return any value. It saves the confusion matrix plot to the specified output path.
     """
     cm = confusion_matrix(y_true, y_pred)
     cm_display = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_names)
@@ -79,7 +89,6 @@ def plot_confusion_matrix(y_true, y_pred, class_names, output_path):
     cm_display.plot(cmap='Blues', ax=ax, values_format='d')
     plt.title('Confusion Matrix - Naive Bayes')
     plt.savefig(output_path)
-    plt.close()
 
 # A function to create a directory for saving results
 def create_results_directory(base_dir: str, dataset_name: str) -> str:
