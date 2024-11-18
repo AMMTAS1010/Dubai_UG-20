@@ -2,10 +2,32 @@ import os
 
 import pandas as pd
 from data_loader import load_preprocessed_data
-from model_evalution import evaluate_model
+from model_evaluation import evaluate_model
 from decision_tree_model import train_decision_tree, plot_decision_tree
+from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
+
+# The function to find the best k for k-Nearest Neighbors
+def find_best_k_for_knn(X_train, y_train, X_valid, y_valid):
+    """Find the best k for k-NN and return the best k and accuracy."""
+    best_k = None
+    best_accuracy = 0
+    results = []
+
+    print("\nFinding the best k for k-NN...")
+    for k in range(1, 21): # Trying k values from 1 to 20
+        knn = KNeighborsClassifier(n_neighbors=k)
+        knn.fit(X_train, y_train)
+        y_pred = knn.predict(X_valid)
+        accuracy = accuracy_score(y_valid, y_pred)
+        results.append((k, accuracy)) # Store the results for each k
+        print(f"k={k}: Validation Accuracy = {accuracy:.4f}") # Print the accuracy for each k
+        if accuracy > best_accuracy: # Update the best k if the current k is better
+            best_k = k
+            best_accuracy = accuracy
+
+    return best_k, best_accuracy, results
 
 # The function to train the k-Nearest Neighbors model
 def train_knn(X_train, y_train, n_neighbors=5):
@@ -33,7 +55,21 @@ def create_results_directory(base_dir, dataset_name):
     return results_base_dir
 
 def main():
-    base_dir = input("Enter the directory of preprocessed data (e.g., './Datasets/preprocessed_data/delivery'): ").strip()
+    # base_dir = input("Enter the directory of preprocessed data (e.g., './Datasets/preprocessed_data/delivery'): ").strip()
+    # Get the data directory from the user
+    print("Choose the dataset to load:")
+    print("1. Delivery Dataset")
+    print("2. Restaurant Dataset")
+
+    choice = input("Enter your choice (1/2): ").strip()
+    if choice == '1':
+        base_dir = './Datasets/preprocessed_data/delivery'
+    elif choice == '2':
+        base_dir = './Datasets/preprocessed_data/restaurant'
+    else:
+        print("Invalid choice. Exiting...")
+        return
+    
     if not os.path.exists(base_dir):
         print(f"The directory {base_dir} does not exist. Please check your input.")
         return
@@ -65,16 +101,29 @@ def main():
         unique_classes = sorted(set(y_train)) # Get unique classes in the target variable
         class_names = [f'Class {cls}' for cls in unique_classes] # Create class names for the plot
         plot_file_path = os.path.join(results_dir, f"{dataset_name}_1.decision_tree_plot.png")
-        plot_decision_tree(model, feature_names, class_names, plot_file_path)
+        plot_decision_tree(model, feature_names, class_names, plot_file_path, max_depth=3) # Plot the decision tree
 
         # Save Decision Tree model evaluation to a separate file
         evaluation_output_path = os.path.join(results_dir, f"{dataset_name}_1.decision_tree_model_evaluation.txt")
         evaluate_model(model, X_valid, y_valid, "Decision Tree", evaluation_output_path)
     
     elif choice == '2':
-        # Train k-Nearest Neighbors model with user input for number of neighbors (k)
-        n_neighbors = int(input("Enter the number of neighbors for k-NN (default: 5): ").strip() or 5)
-        model = train_knn(X_train, y_train, n_neighbors)
+        # Find the best k for k-NN
+        best_k, best_accuracy, results = find_best_k_for_knn(X_train, y_train, X_valid, y_valid)
+
+        # Save best k results
+        best_k_path = os.path.join(results_dir, f"{dataset_name}_2.best_k_for_knn.txt")
+        with open(best_k_path, 'w') as f:
+            f.write(f"Best k: {best_k}\n")
+            f.write(f"Validation Accuracy: {best_accuracy:.4f}\n")
+            f.write("All k results:\n")
+            for k, acc in results:
+                f.write(f"k={k}: Validation Accuracy = {acc:.4f}\n")
+
+        print(f"\nBest k value saved to {best_k_path}")
+
+        # Train k-Nearest Neighbors model with the best k (from the range 1-20)
+        model = train_knn(X_train, y_train, n_neighbors=best_k)
 
         # Save KNN model evaluation to a separate file
         evaluation_output_path = os.path.join(results_dir, f"{dataset_name}_2.knn_model_evaluation.txt")
