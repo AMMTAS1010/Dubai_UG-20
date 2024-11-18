@@ -1,0 +1,14 @@
+Naive Bayes Model Evaluation:
+Accuracy: 0.7457
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.98      0.24      0.39      8832
+           1       1.00      1.00      1.00      8833
+           2       0.57      1.00      0.72      8833
+
+    accuracy                           0.75     26498
+   macro avg       0.85      0.75      0.70     26498
+weighted avg       0.85      0.75      0.70     26498
+

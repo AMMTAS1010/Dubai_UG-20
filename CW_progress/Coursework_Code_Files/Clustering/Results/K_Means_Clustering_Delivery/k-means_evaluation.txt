@@ -1,0 +1,4 @@
+K-Means Clustering Evaluation:
+ - Silhouette Score: 0.415
+ - Davies-Bouldin Index: 1.320
+ - Calinski-Harabasz Index: 42819.013
