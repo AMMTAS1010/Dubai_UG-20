@@ -10,28 +10,75 @@ import os
 import pandas as pd
 
 def run_cnn_analysis():
+    """
+    Runs the CNN analysis for the Food101 dataset.
+    """
     print("Running CNN model for Food101 dataset...")
-    dataset_path = "../Datasets/archive/images"  # Adjust to your actual dataset path
-    meta_path = "../Datasets/archive/meta/meta"       # Adjust to your actual meta files path
+    dataset_path = "../Datasets/archive/images"  
+    meta_path = "../Datasets/archive/meta/meta"
     num_classes = 101  # For Food101 dataset
-    model_name = "CNN_ResNet18"
     dataset_name = "Food101"
+
+    # Select CNN Model Type
+    print("\nSelect CNN Model Type:")
+    print("1. Pre-trained ResNet18")
+    print("2. Classical CNN (from scratch)")
+    model_type_choice = input("Enter the model type number (1 or 2): ")
+
+    if model_type_choice == "1":
+        model_name = "CNN_ResNet18"
+        use_pretrained = True
+    elif model_type_choice == "2":
+        model_name = "CNN_Classical"
+        use_pretrained = False
+    else:
+        print("Invalid model type choice. Defaulting to Pre-trained ResNet18.")
+        model_name = "CNN_ResNet18"
+        use_pretrained = True
+
+    # Define training parameters
+    img_height = 224  # Based on the most common image size (512x512), but resized to 224x224 for consistency
+    img_width = 224
+    batch_size = 64
+    epochs = 100  # Increased number of epochs for deeper training
 
     # Create results directory
     results_dir = f"Results/{model_name}_{dataset_name}"
     os.makedirs(results_dir, exist_ok=True)
 
-    # Create and train the CNN model
-    model = create_cnn_model(dataset_path, meta_path, num_classes, results_dir)
+    print("\nStarting CNN training...")
+    print(f"Model Type: {'Pre-trained ResNet18' if use_pretrained else 'Classical CNN (from scratch)'}")
+    print(f"Number of Epochs: {epochs}")
+    print(f"Batch Size: {batch_size}")
+    print(f"Results Directory: {results_dir}\n")
 
-    # You can implement evaluation functions for the CNN model here
-    # For example, plot accuracy/loss curves, save the model, etc.
+    # Create and train the CNN model
+    model = create_cnn_model(
+        dataset_path=dataset_path,
+        meta_path=meta_path,
+        num_classes=num_classes,
+        results_dir=results_dir,
+        img_height=img_height,
+        img_width=img_width,
+        batch_size=batch_size,
+        epochs=epochs,
+        use_pretrained=use_pretrained
+    )
+
+    print(f"\nTraining completed. Best model saved at '{os.path.join(results_dir, 'best_model.pth')}'")
+    print(f"Training and validation accuracy plots saved at '{os.path.join(results_dir, 'cnn_training_accuracy.png')}'")
+    print(f"Model checkpoints saved in '{os.path.join(results_dir, 'checkpoints')}' directory.")
+
+    # Additional evaluation or analysis can be implemented here if needed
 
 def run_tabular_analysis():
+    """
+    Runs the tabular data analysis for Delivery or Restaurant datasets.
+    """
     print("Select Dataset Type:")
     print("1. Delivery Dataset")
     print("2. Restaurant Dataset")
-    dataset_choice = input("Enter the dataset number: ")
+    dataset_choice = input("Enter the dataset number (1 or 2): ")
 
     if dataset_choice == "1":
         dataset_type = "delivery"
@@ -43,14 +90,15 @@ def run_tabular_analysis():
         print("Invalid dataset choice.")
         return
 
-    base_dir = '../Datasets/preprocessed_data'  # Adjust the path
+    base_dir = '../Datasets/preprocessed_data'  # Adjust the path accordingly
 
+    # Load and preprocess data
     X_train_full, y_train_full, X_test, y_test, num_classes, categorical_features, numerical_features = load_and_preprocess_data(base_dir, dataset_type)
 
-    print("Select Model:")
+    print("\nSelect Model:")
     print("1. Logistic Regression")
     print("2. MLP Classifier")
-    model_choice = input("Enter the model number: ")
+    model_choice = input("Enter the model number (1 or 2): ")
 
     # Get class labels for plotting
     class_labels = sorted(y_train_full.unique())
@@ -80,6 +128,7 @@ def run_tabular_analysis():
             'classifier__max_iter': [500, 1000]
         }
 
+        print("\nStarting Logistic Regression training and evaluation...")
         # Evaluate Logistic Regression
         best_model = evaluate_logistic_regression(
             model,
@@ -99,6 +148,7 @@ def run_tabular_analysis():
     elif model_choice == "2":
         # MLP Classifier using PyTorch
 
+        print("\nStarting MLP Classifier training and evaluation...")
         # Train and evaluate MLP Classifier
         train_mlp_pytorch(
             X_train_full,
@@ -114,10 +164,13 @@ def run_tabular_analysis():
         return
 
 def main():
+    """
+    Main function to select and run analysis types.
+    """
     print("Select Analysis Type:")
     print("1. Image Dataset (Food101)")
     print("2. Tabular Dataset (Delivery or Restaurant)")
-    analysis_choice = input("Enter the analysis number: ")
+    analysis_choice = input("Enter the analysis number (1 or 2): ")
 
     if analysis_choice == "1":
         run_cnn_analysis()
@@ -127,4 +180,4 @@ def main():
         print("Invalid choice.")
 
 if __name__ == "__main__":
-        main()
+    main()
