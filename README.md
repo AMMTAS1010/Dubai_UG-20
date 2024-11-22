@@ -82,17 +82,18 @@ This project is part of the Data Mining & Machine Learning coursework, aiming to
         - `model_evaluation.py`
         - `README.md`  <!-- Documentation for classifiers and decision trees -->
       - **Neural Networks (and CNNs)/**
-        - **Results/**
         - `CNN_Classifier.py`
         - `experiment.py`
         - `Find_Image_Size.py`
         - `MLP_and_Linear_Classifiers.py`
         - `CNN_and_MLP_and_Linear_CLassifier.ipynb`
         - `README.md`  <!-- Documentation for neural networks -->
-     - **Datasets/**
+      - **Datasets/**
         - **Original Datasets/**
         - **preprocessed_data/**
         - **archive/**
+        - **Results/**
+        
 
 ## Data Preprocessing
 
