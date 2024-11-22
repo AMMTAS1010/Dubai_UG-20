@@ -12,7 +12,9 @@ from clustering_utils import (
     plot_clusters,
     cluster_profile,
     plot_cluster_counts,
+    plot_birch_dendrogram,  # Moved dendrogram plotting to clustering_utils.py
 )
+
 def kmeans_clustering(data, max_clusters=10, results_dir=None):
     sse = []
     silhouette_scores = []
@@ -25,14 +27,16 @@ def kmeans_clustering(data, max_clusters=10, results_dir=None):
         silhouette_scores.append(silhouette_score(data, kmeans.labels_))
 
     # Plot Inertia (Elbow Method)
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(10, 6))  # Increased figure size
     plt.plot(cluster_range, sse, marker='o')
-    plt.title("K-Means Elbow Method")
-    plt.xlabel("Number of Clusters")
-    plt.ylabel("Inertia (SSE)")
-    plt.grid()
+    plt.title("K-Means Elbow Method", fontsize=14)
+    plt.xlabel("Number of Clusters", fontsize=12)
+    plt.ylabel("Inertia (SSE)", fontsize=12)
+    plt.xticks(cluster_range, fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.grid(True)
     if results_dir:
-        plt.savefig(os.path.join(results_dir, "kmeans_elbow_method.png"))
+        plt.savefig(os.path.join(results_dir, "kmeans_elbow_method.png"), bbox_inches='tight')
     plt.show()
 
     # Plot Silhouette Scores
@@ -115,8 +119,6 @@ def dbscan_clustering(data, eps_values=[0.3, 0.5, 0.7, 0.9], min_samples_values=
     return labels
 
 def birch_clustering(data, threshold_values=[0.3, 0.5, 0.7], n_clusters_values=[2, 3, 4, 5, 6], results_dir=None):
-    from scipy.cluster.hierarchy import dendrogram, linkage
-
     best_score = -1
     best_threshold = None
     best_n_clusters = None
@@ -161,35 +163,9 @@ def birch_clustering(data, threshold_values=[0.3, 0.5, 0.7], n_clusters_values=[
         cluster_profile(data, labels, "Birch", results_dir)
 
         # Plot dendrogram
-        plot_birch_dendrogram(best_model, data, results_dir)
+        plot_birch_dendrogram(best_model, data, "Birch", results_dir)
     else:
         print("Birch did not find sufficient clusters with the given parameter ranges.")
         labels = None
 
     return labels
-
-def plot_birch_dendrogram(birch_model, data, results_dir=None):
-    """
-    Plot a dendrogram for the Birch clustering.
-
-    Parameters:
-    - birch_model: The trained Birch model.
-    - data: The dataset used for clustering.
-    - results_dir: Directory to save the dendrogram plot.
-    """
-    # Extract the subcluster centroids
-    subcluster_centers = birch_model.subcluster_centers_
-
-    # Perform hierarchical clustering on the subcluster centroids
-    linked = linkage(subcluster_centers, method='ward')
-
-    # Plot dendrogram
-    plt.figure(figsize=(10, 7))
-    dendrogram(linked)
-    plt.title('Birch Clustering Dendrogram')
-    plt.xlabel('Subcluster Index')
-    plt.ylabel('Distance')
-    if results_dir:
-        plt.savefig(os.path.join(results_dir, "birch_dendrogram.png"))
-        print("Birch dendrogram plot saved.")
-    plt.show()
