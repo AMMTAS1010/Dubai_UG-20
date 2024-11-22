@@ -9,6 +9,7 @@ from clustering_utils import (
     load_and_preprocess_data,
     evaluate_clustering,
     ensure_directory,
+    plot_birch_dendrogram,  # Ensure this is imported if needed
 )
 import os
 import matplotlib.pyplot as plt
@@ -63,12 +64,13 @@ def main():
         results_dir = f"Results/DBScan_Clustering_{dataset_name}"
         ensure_directory(results_dir)
         if dataset_type == "delivery": 
-            min_samples_values=[5, 10, 15] 
+            min_samples_values = [5, 10, 15] 
         else: 
-            min_samples_values=[5, 10, 15],
+            min_samples_values = [5, 10, 15]  # Corrected the assignment
         labels = dbscan_clustering(
             X_processed,
             eps_values=[0.3, 0.5, 0.7, 0.9],
+            min_samples_values=min_samples_values,  # Pass the min_samples_values correctly
             results_dir=results_dir
         )
         if labels is not None:
@@ -157,33 +159,42 @@ def compare_algorithms(comparison_metrics, results_dir):
         print(f"Comparison metrics saved to {os.path.join(results_dir, 'clustering_algorithms_comparison.csv')}")
 
     # Plot comparison of Silhouette Scores
-    plt.figure(figsize=(8, 5))
-    sns.barplot(x='method', y='silhouette_score', data=df_metrics)
-    plt.title("Comparison of Clustering Algorithms - Silhouette Score")
-    plt.xlabel("Clustering Algorithm")
-    plt.ylabel("Silhouette Score")
+    plt.figure(figsize=(10, 6))  # Increased figure size
+    sns.barplot(x='method', y='silhouette_score', data=df_metrics, palette='viridis')
+    plt.title("Comparison of Clustering Algorithms - Silhouette Score", fontsize=14)
+    plt.xlabel("Clustering Algorithm", fontsize=12)
+    plt.ylabel("Silhouette Score", fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.tight_layout()
     if results_dir:
-        plt.savefig(os.path.join(results_dir, "clustering_algorithms_silhouette_comparison.png"))
+        plt.savefig(os.path.join(results_dir, "clustering_algorithms_silhouette_comparison.png"), bbox_inches='tight')
     plt.show()
 
     # Plot comparison of Davies-Bouldin Index (lower is better)
-    plt.figure(figsize=(8, 5))
-    sns.barplot(x='method', y='davies_bouldin_index', data=df_metrics)
-    plt.title("Comparison of Clustering Algorithms - Davies-Bouldin Index")
-    plt.xlabel("Clustering Algorithm")
-    plt.ylabel("Davies-Bouldin Index")
+    plt.figure(figsize=(10, 6))  # Increased figure size
+    sns.barplot(x='method', y='davies_bouldin_index', data=df_metrics, palette='magma')
+    plt.title("Comparison of Clustering Algorithms - Davies-Bouldin Index", fontsize=14)
+    plt.xlabel("Clustering Algorithm", fontsize=12)
+    plt.ylabel("Davies-Bouldin Index", fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.tight_layout()
     if results_dir:
-        plt.savefig(os.path.join(results_dir, "clustering_algorithms_davies_bouldin_comparison.png"))
+        plt.savefig(os.path.join(results_dir, "clustering_algorithms_davies_bouldin_comparison.png"), bbox_inches='tight')
     plt.show()
 
     # Plot comparison of Calinski-Harabasz Index (higher is better)
-    plt.figure(figsize=(8, 5))
-    sns.barplot(x='method', y='calinski_harabasz_index', data=df_metrics)
-    plt.title("Comparison of Clustering Algorithms - Calinski-Harabasz Index")
-    plt.xlabel("Clustering Algorithm")
-    plt.ylabel("Calinski-Harabasz Index")
+    plt.figure(figsize=(10, 6))  # Increased figure size
+    sns.barplot(x='method', y='calinski_harabasz_index', data=df_metrics, palette='coolwarm')
+    plt.title("Comparison of Clustering Algorithms - Calinski-Harabasz Index", fontsize=14)
+    plt.xlabel("Clustering Algorithm", fontsize=12)
+    plt.ylabel("Calinski-Harabasz Index", fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.tight_layout()
     if results_dir:
-        plt.savefig(os.path.join(results_dir, "clustering_algorithms_calinski_harabasz_comparison.png"))
+        plt.savefig(os.path.join(results_dir, "clustering_algorithms_calinski_harabasz_comparison.png"), bbox_inches='tight')
     plt.show()
 
 if __name__ == "__main__":

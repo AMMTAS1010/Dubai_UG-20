@@ -1,4 +1,0 @@
-DBSCAN Clustering Evaluation:
- - Silhouette Score: 0.877
- - Davies-Bouldin Index: 0.212
- - Calinski-Harabasz Index: 2716.730
