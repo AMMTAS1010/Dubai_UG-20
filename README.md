@@ -89,10 +89,10 @@ This project is part of the Data Mining & Machine Learning coursework, aiming to
         - `MLP_and_Linear_Classifiers.py`
         - `CNN_and_MLP_and_Linear_CLassifier.ipynb`
         - `README.md`  <!-- Documentation for neural networks -->
-    - **Datasets/**
-      - **Original Datasets/**
-      - **preprocessed_data/**
-      - **archive/**
+     - **Datasets/**
+        - **Original Datasets/**
+        - **preprocessed_data/**
+        - **archive/**
 
 ## Data Preprocessing
 
